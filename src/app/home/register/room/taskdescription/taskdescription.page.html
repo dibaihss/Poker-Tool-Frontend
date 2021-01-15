@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="text-align: center;">Task Description</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<h1 >
+
+</h1>
+<ion-card>
+  <ion-card-content>
+    <ion-card-header>
+     <h1 style="text-align: center; color: wheat;">{{singleTask}}</h1> 
+    </ion-card-header>
+   <p *ngIf="!taskDescription" style="text-align: center;">No Description for this task available!</p> {{taskDescription}}
+  </ion-card-content>
+</ion-card>
+<div>
+  
+</div>
+
+  
+<ion-fab vertical="bottom" horizontal="center" slot="fixed" >
+  <ion-fab-button id="ionFabbtn" (click)="close()">
+   
+      <ion-icon name="close"></ion-icon>
+    
+    
+  </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+    <ion-avatar slot="end" style="--border-radius: 0%">
+      <img
+        width="100%"
+        src="https://media.glassdoor.com/sqll/1121784/vereinigte-hagelversicherung-squarelogo-1450938288893.png"
+      />
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <ion-card>
+    <ion-card-content>
+      <ion-item-group>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+
+          <ion-input
+            formControlName="password"
+            name="password"
+            type="password"
+          ></ion-input>
+        </ion-item>
+        <div
+          class="text-danger"
+          *ngIf="password.invalid && password.touched || errorCode || errorMessage"
+        >
+          <p *ngIf="password.errors ?.required">required</p>
+          <p *ngIf="errorCode || errorMessage">
+            {{errorCode}} {{errorMessage}}
+          </p>
+        </div>
+      </ion-item-group>
+
+      <ion-item>
+        <ion-button [disabled]="loginForm.invalid" type="submit"
+          >login</ion-button
+        >
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <div style="margin: 15px" *ngIf="emailNotVerfied">
+    <p class="text-danger">{{emailNotVerfied}}</p>
+    <ion-button color="danger" (click)="verfiedEmail()"
+      >Send a Verfiecation Email</ion-button
+    >
+  </div>
+</form>
+<div style="text-align: center">
+  <a (click)="forgetPassword()" class="resetPassword">Reset the Password</a>
+  <p style="font-size: small">You doesn't have an account?</p>
+  <p style="font-size: small">
+    Go ahead and <a [routerLink]="['/newaccount']">create one!</a>
+    
+  </p>
+  <p>Do need help by using the app </p> <a [routerLink]="['/anleitung']"> <ion-button fill="outline"> <ion-icon style="width: 40px;" name="help-circle-outline"></ion-icon></ion-button></a>
+
+</div>
+
+
+<ion-content> </ion-content>

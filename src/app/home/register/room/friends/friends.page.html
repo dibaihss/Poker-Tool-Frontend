@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Friends</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <div  *ngFor="let friend of friendsList">
+            <ion-item *ngIf="friend.friendName">
+              <ion-avatar
+                slot="start"
+                class="avatarE"
+                style="background-color: transparent; width: 30px; height: 30px"
+                (click)="cancelFriendship(friend.friendName,friend.hisEmail)"
+                ><img
+                  src="https://www.flaticon.com/svg/static/icons/svg/2150/2150538.svg"
+              /></ion-avatar>
+              <ion-label style="font-size: medium;" id="labeltasks"> {{friend.friendName}} </ion-label>
+              <ion-button
+                slot="end"
+                fill="clear"
+                (click)="sendInvitaion(friend.friendName ,friend.hisEmail)"
+                ><ion-icon name="add-circle-outline"></ion-icon>&nbsp;
+                invite</ion-button
+              >
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button id="ionFabbtn" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

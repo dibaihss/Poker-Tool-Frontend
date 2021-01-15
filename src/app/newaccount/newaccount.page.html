@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button (click)="back()" slot="start">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title>Creating a New Account</ion-title><ion-avatar slot="end" style="--border-radius: 0%">
+      <img width="100%" src="https://media.glassdoor.com/sqll/1121784/vereinigte-hagelversicherung-squarelogo-1450938288893.png">
+
+    </ion-avatar>
+  </ion-toolbar>
+</ion-header>
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    
+  <ion-card>
+    <ion-card-content>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>Registration Data</ion-label>
+        </ion-item-divider>
+      
+<ion-item>
+  <ion-label  position="floating">Name</ion-label>
+
+  <ion-input formControlName="userName" name="userName" type="text" ></ion-input>
+ 
+</ion-item>
+
+
+<p class="text-danger" *ngIf="userName.errors ?.required && userName.touched" >Name is required</p>
+ <p class="text-danger" *ngIf="userName.errors ?.forbiddenName">{{userName.errors ?.forbiddenName.value}} is a forbidden name</p>
+<ion-item>
+  <ion-label position="floating">Password</ion-label>
+ 
+  <ion-input formControlName="password" name="password" type="password"></ion-input>
+</ion-item>
+<div class="text-danger" *ngIf="password.invalid && password.touched">
+  <p *ngIf="password.errors ?.required">required</p>
+  <p *ngIf="password.errors ?.minlength">The length of the Password must be at least 6 characters</p>
+
+</div>
+<ion-item>
+  <ion-label position="floating">Confirm Password</ion-label>
+ 
+  <ion-input formControlName="confirmPassword" name="confirmPassword" type="password"></ion-input>
+</ion-item>
+<p class="text-danger" *ngIf="registrationForm.errors ?.misMatch">The both passwords mismatch</p>
+<div class="text-danger" *ngIf="confirmpassword.invalid && confirmpassword.touched">
+<p *ngIf="confirmpassword.errors ?.required">required</p>
+<p *ngIf="confirmpassword.errors ?.minlength">the length must be at least 6 characters</p>
+
+</div>
+<ion-item>
+  <ion-label  position="floating">Email</ion-label>
+
+  <ion-input formControlName="email" type="email" ></ion-input>
+ 
+</ion-item>
+<p *ngIf="emailNotcorrect" class="text-danger">{{emailNotcorrect}}</p>
+</ion-item-group>
+
+<ion-item>
+  <ion-button [disabled]="registrationForm.invalid"  type="submit">Register</ion-button>
+  
+</ion-item>
+<div *ngIf="theUserExists" style="margin: 15px;" class="text-danger">
+  <p>{{theUserExists}}</p>
+</div>
+
+</ion-card-content>
+</ion-card>
+</form>
+<ion-content>
+ 
+ 
+    
+</ion-content>
+

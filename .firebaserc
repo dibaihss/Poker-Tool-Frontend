@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "poker-163f2",
+    "staging": "poker-163f2",
+    "entire": "poker-163f2",
+    "poker": "poker-163f2"
+  }
+}

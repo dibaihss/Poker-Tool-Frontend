@@ -1,0 +1,379 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button (click)="back()" slot="start">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-button
+      (click)="presentModalfriends(this.friendsList ,this.idCurrentRoom , currentUserName, myEmail , currentRoomName)"
+      slot="start"
+      ><ion-icon name="people-outline"></ion-icon
+    ></ion-button>
+    <ion-button
+      (click)="presentModalInvitingList(idCurrentRoom , currentUserName, this.friendsList , currentRoomName , myEmail , idCurrent, usersInRoom)"
+      slot="end"
+      ><ion-icon name="people-circle-outline"></ion-icon
+    ></ion-button>
+
+  <ion-button (click)="presentModalAnleitung()" slot="end"><ion-icon name="help-circle-outline"></ion-icon></ion-button>
+
+    <ion-title style="text-align: center">
+      <img
+        width="60px"
+        height="60px"
+        src="https://media.glassdoor.com/sqll/1121784/vereinigte-hagelversicherung-squarelogo-1450938288893.png"
+      />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="4">
+        <ion-item>
+          <h1 class="HeaderInfo" *ngIf="idCurrent !== 1">
+            User : {{currentUserName}}
+          </h1>
+          <h1 class="HeaderInfo" *ngIf="idCurrent === 1">
+            Admin : {{currentUserName}}
+          </h1>
+        </ion-item>
+      </ion-col>
+      <ion-col size-sm="4">
+        <h1 style="text-align: center; color: rgb(251, 175, 33)">
+          {{currentRoomName}} Room
+        </h1></ion-col
+      >
+    </ion-row>
+  </ion-grid>
+
+  <form #taskForm="ngForm" (ngSubmit)="addTasks()">
+    <ion-card *ngIf="idCurrent === 1">
+      <ion-card-content>
+        <ion-item-group>
+          <ion-item>
+            <ion-label position="floating">Suggest a task</ion-label>
+
+            <ion-input
+              [(ngModel)]="singleTask"
+              name="taskInput"
+              type="text"
+            ></ion-input>
+
+            <p [class.unter]="unterAnimation" *ngIf="unterAnimation">
+              {{singleTaskforAnimi}}
+            </p>
+          </ion-item>
+          <ion-item *ngIf="ToggleDescription" style="z-index: 1">
+            <ion-label style="color: grey" position="floating"
+              >Task Description (optional)</ion-label
+            >
+
+            <ion-textarea
+              [(ngModel)]="taskDescription"
+              name="taskInput"
+              type="text"
+            ></ion-textarea>
+          </ion-item>
+
+          <ion-button style="margin: 10px" type="submit">
+            publish the Task
+          </ion-button>
+          <ion-button
+            type="button"
+            *ngIf="!ToggleDescription"
+            (click)="toggleDEscription()"
+            color="dark"
+            slot="end"
+            ><ion-icon name="add"></ion-icon>ADD DEScription</ion-button
+          >
+
+          <ion-button
+            type="button"
+            *ngIf="ToggleDescription"
+            (click)="toggleDEscription()"
+            color="dark"
+            slot="end"
+            ><ion-icon name="remove"></ion-icon
+          ></ion-button>
+        </ion-item-group>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+  <hr />
+
+  <div class="divList">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <ion-list-header class="header-list">
+              <ion-label class="header-label">Tasks</ion-label>
+            </ion-list-header>
+            <div
+              *ngFor="let task of tasksArray"
+              class="ion-activatable ripple-parent"
+            >
+              <ion-item
+                *ngIf="task.id !== null"
+                [class.Bordermarkiert]="task.id === markierteTask"
+                (click)="clickedTask(task.singletask , task.id)"
+                ><ion-ripple-effect></ion-ripple-effect>
+                <ion-label id="labeltasks">{{task.singletask}} </ion-label>
+                <span *ngFor="let Etask of estimatedTask"
+                  ><ion-button
+                    *ngIf="Etask.Task === task.singletask"
+                    color="medium"
+                    fill="clear"
+                    ><ion-icon name="hand-right-outline"></ion-icon></ion-button
+                ></span>
+                <span
+                  ><ion-button
+                    fill="clear"
+                    (click)="presentModal(task.singletask, task.taskDescription)"
+                    >more details</ion-button
+                  ></span
+                >
+                <span *ngIf="idCurrent === 1">
+                  <ion-button (click)="onDeleteTask(task.id)">
+                    <ion-icon color="danger" name="trash"></ion-icon
+                  ></ion-button>
+                </span>
+              </ion-item>
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-card style="background: transparent">
+      <ion-card-content>
+        <div
+          class="allCardsContainer"
+          [class.cardImgActive]="currentSelectedTask"
+        >
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 1 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(1)" class="face front">
+                <em class="centered1">1</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 3 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(3)" class="face front">
+                <em class="centered1">3</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 5 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(5)" class="face front">
+                <em class="centered1">5</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 8 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(8)" class="face front">
+                <em class="centered1">8</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 13 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(13)" class="face front">
+                <em class="centered1">13</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 21 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(21)" class="face front">
+                <em class="centered1">21</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 34 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(34)" class="face front">
+                <em class="centered1">34</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="container1">
+            <div
+              class="card"
+              [class.clickedContainer1]="givenPoints !== 55 && givenPoints != null && givenPoints != 0"
+              *ngIf="givenPoints  || clickedPoints === 0 || clickedPoints !== 0"
+            >
+              <div (click)="GetPoints(55)" class="face front">
+                <em class="centered1">55</em>
+                <img
+                  class="cardImg"
+                  src="https://images-na.ssl-images-amazon.com/images/I/51B3jx2jl4L._AC_SY355_.jpg"
+                />
+              </div>
+              <div class="face back">
+                <img
+                  class="cardImg"
+                  src="https://static.vecteezy.com/ti/gratis-vektor/t2/535774-ruckseite-der-spielkarte-kostenlos-vektor.jpg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <ion-list-header class="header-list">
+              <ion-label class="header-label">User Votes</ion-label>
+            </ion-list-header>
+            <div *ngFor="let selected of MembersThatSelected">
+              <ion-item
+                *ngIf="selected.points !== null && currentSelectedTask === selected.selectedTask"
+              >
+                <ion-label>{{selected.memberName}}</ion-label
+                ><strong style="margin-right: 20px"
+                  >{{selected.selectedTask}}</strong
+                >
+                <ion-button fill="clear">{{selected.points}}</ion-button> points
+              </ion-item>
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-label
+          >Difficulty Level
+          <ion-label *ngIf="currentSelectedTask"
+            >For Task: {{currentSelectedTask}}</ion-label
+          ></ion-label
+        >
+      </ion-item>
+      <ion-item>
+        <ion-progress-bar
+          color="{{difficulty.difficultyColor}}"
+          value="{{difficulty.difficultyLevel}}"
+        ></ion-progress-bar>
+      </ion-item>
+      {{difficulty.difficultyLevel}} : {{difficulty.difficultyColor}}
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="exportToCsv()" style="margin: 15px"
+    >Download the data as CSV</ion-button
+  >
+  <ion-button *ngIf="idCurrent === 1" (click)="deleteRoom()" color="danger"
+    >Delete the Room</ion-button
+  >
+
+  
+</ion-content>

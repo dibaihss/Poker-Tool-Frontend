@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Users in room</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <br />
+  <form #userinput="ngForm" (ngSubmit)="sendInvitaion(typedEmail)">
+    <ion-item>
+      <ion-label position="floating">Send a invitation via Email</ion-label>
+      <ion-input
+        required
+        [(ngModel)]="typedEmail"
+        name="typedemail"
+        type="text"
+        #search="ngModel"
+      ></ion-input>
+      <ion-button [disabled]="search.invalid" slot="end" type="submit"
+        >invite</ion-button
+      >
+    </ion-item>
+    <br />
+  </form>
+
+  <ion-list>
+    <p *ngIf="UsersInRoom.length === 1" style="text-align: center; color: gray">
+      No Users in this room except you!
+    </p>
+    <div *ngFor="let user of UsersInRoom; let i = index">
+      <ion-item *ngIf="user.Name && currentUserName != user.Name">
+        <ion-label id="labeltasks"> {{user.Name}} </ion-label>
+        <ion-button
+          *ngIf="!user.friend"
+          (click)="sendFriendRequest(user.Name)"
+          fill="clear"
+          slot="end"
+          ><ion-icon name="person-add-outline"></ion-icon
+        ></ion-button>
+        <ion-button
+          *ngIf="!user.kicked && idCurrent === 1"
+          (click)="confirmBanUser(user.Name , user.Email, user.friend)"
+          fill="clear"
+          slot="end"
+          color="danger"
+          ><ion-icon name="ban-outline"></ion-icon
+        ></ion-button>
+        <ion-avatar
+          *ngIf="user.kicked && idCurrent === 1"
+          slot="end"
+          (click)="CancelTheBanning(user.Name , user.Email, user.friend)"
+          class="avatarE"
+          ><img
+            src="https://cdn.onlinewebfonts.com/svg/img_464869.png"
+            style="width: 100%"
+        /></ion-avatar>
+      </ion-item>
+    </div>
+  </ion-list>
+
+  <div *ngFor="let user of bannedUsers1">
+    <h1>{{user.UserName}}</h1>
+  </div>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button id="ionFabbtn" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

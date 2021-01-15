@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Poker </ion-title>
+    <div (click)="showProfiloptions()" slot="end" id="UserName">
+      <div class="centered">{{currentUserName}}</div>
+      <ion-icon *ngIf="toggleOptions" name="chevron-down-outline"></ion-icon
+      ><ion-icon *ngIf="!toggleOptions" name="chevron-up-outline"></ion-icon>
+    </div>
+  </ion-toolbar>
+  <ion-card
+    [class.showProfilOption]="toggleOptions"
+    style="position: absolute; right: 0; margin: 0"
+  >
+    <ion-card-content>
+      <p class="profileOptions">Profile</p>
+      <p class="profileOptions">Settings</p>
+      <p (click)="logout()" class="profileOptions">Sign out</p>
+    </ion-card-content>
+  </ion-card>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <div>
+      <img
+        style="margin-bottom: 15px"
+        width="100px"
+        height="100px"
+        src="https://media.glassdoor.com/sqll/1121784/vereinigte-hagelversicherung-squarelogo-1450938288893.png"
+      />
+    </div>
+    <strong>Ready to create or join a Room?</strong>
+    <div class="btn-join-create">
+      <ion-button (click)="CreateClicked()"> Create a Room </ion-button>
+    </div>
+    <div (click)="JoinClicked()" class="btn-join-create">
+      <ion-button color="danger"> Join a Room </ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="text-align: center;">Anleitung</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="content">
+    <p>Willkommen in unserem App!
+      Wir hoffen, es gefällt Ihnen</p>
+      <p>Im Anleitungabschnitt wird Ihnen Schritt für Schritt gezeigt, wie der App genau funktioniert.</p> 
+      <p>Sobald Sie den App starten, werden Sie darum gebetten, falls Sie einen Account haben, sich anzumelden, falls nicht, sich einen neuen Account anzulegen.</p>
+      <p>Um einen neuen Account zu erstellen, sollten Sie einfach auf "create one" klicken</p>
+      <img   src="../../assets/img/CreateOne.JPG">
+      <p>Danach werden die folgenden Eingabefelder erscheinen, um sie auszufüllen, mit Ihrem Darstellungsnamen, Ihrem eigenen Password und Ihrer Email Adresse: </p>
+    
+      <img src="../../assets/img/CreateFeld.JPG">
+      <p>Nachdem Sie alles richtig ausgefüllt haben, sollen Sie nun auf "Register Knopf" klicken!</p>
+      <p>Sie werden eine E-Mail an Ihrer eingegebenen Email Addresse bekommen, um Ihren Account zu verifizieren. </p>
+      <p>Alles hat geklappt! Glückwunsch Sie haben jetzt einen Account, mit dem Sie sich anmelden können.</p>
+      <p>Für die Anmeldung brauchen Sie nur Ihre Email Addresse und Ihres Password einzugeben.</p>
+      <p>Nach der erfolgreichen Anmeldung, sind Sie im App drin! </p>
+      <img src="../../assets/img/ProfilOptions.JPG">
+      <p>ganz oben rechts, finden Sie Ihren Darstellungnamen, wenn Sie darauf klicken, haben Sie drei Optionen Profil, Einstellung und abmelden</p>
+    <img src="../../assets/img/inDerMitte.JPG">
+    <p>In der mitte, haben Sie zwei Optionen, entweder einen Raum zu erstellen oder einem bereits von Ihnen oder von anderen Benutzern erstellten Raum beizutreten</p>
+    <p>Falls Sie "erstellen" wählen:</p>
+    <img src="../../assets/img/erstellRaum.JPG">
+    <p> werden Sie  zwei Eingabefelder zu ausfüllen haben, der Erste, der Name von dem Raum und der Zweite ist der Raum-id. </p>
+    <p>Der Raum Id ist wie der Schlüssel zum Raum, man sollte ihn haben, um dem Raum nach der Erstellung beitreten zu können. </p>
+    <p style="text-align: center;">Jetzt beim Klicken auf "beitreten"</p>
+    <img src="../../assets/img/beitretenR.JPG">
+    <p>Sie oder anderen Benutzern haben einen Raum erstellt, wird dieser Raum in der Raumliste gelistet</p>
+    <p>wenn Sie schwerigkeiten beim Finden Ihres Raums haben, können Sie einfach den Namen von Ihrem Raum in der Suchefeld eingeben dann wird er gefunden. </p>
+    <p>Es gibt drei Möglichkeiten, um einem Raum beizutreten, die Erste wäre mit dem Raum-id.
+    
+    </p>
+    <p>wenn Sie den Raum-id von einem Raum wissen, sollen Sie ihn eingeben und Sie werden direkt zum Raum mit diesem ID weitergeleitet </p>
+    <p>Für die zweite Möglichkeit gibt es eine Vorausetztung. Sie müssen bereits ein Mitglied in dem Raum sein. d.h Sie müssten vorher dem Raum einmal beigetreten haben </p>
+    <p>Wenn Sie ein Mitglied in einem Raum sind dann sollen Sie den Raum in der Liste finden und auf "Enter" klicken. </p>
+    <p>Die dritte Möglichkeit wäre über die Einladung von anderen Benutzern. </p>
+    <p style="text-align: center; font-size: large;">Der Raum</p>
+    <p>die Obere Linie</p>
+    <img src="../../assets/img/obereLinie.JPG">
+    <div>
+    
+        <ion-button (click)="showUsersInRoomF()"><ion-icon name="people-circle-outline"></ion-icon></ion-button>
+        <span style="margin-left: 5px;">Beim Klicken auf diesen Tap, wird die Liste von den Benutzern, die Mitgelieder in diesm Raum sind, dargestellt</span>
+        <div>
+    <img *ngIf="showUsersInRoom" src="../../assets/img/usersInRoom.JPG">
+    <p>Sie Haben zwei Optionen neben jedem Mitglied</p>
+    <ul>
+      <li><ion-icon name="person-add-outline"></ion-icon> freundschaftsanfrage schicken, falls er kein Freund von Ihnen ist, ansonsten wird diese Option gar nix gezeigt</li>
+      <li><ion-icon name="ban-outline"></ion-icon> Einen Benutzer aus dem Raum werfen (nur der Admin darf das) </li>
+    </ul>
+    </div>
+        </div>
+        <div>
+        <ion-button (click)="showFriendsListF()"><ion-icon name="people-outline"></ion-icon></ion-button> 
+    <span style="margin: 10px;">Beim Klicken auf diesen Tap, wird die Liste von den Freunden dargestellt</span>
+    <div>
+    <img *ngIf="showFriendsList" src="../../assets/img/frindsList.JPG">
+    <p>Freund kann man zum Raum einladen oder die Freundschaft entfernen</p>
+    <ul>
+      <li><ion-icon name="add-circle-outline"></ion-icon> Freund einladen </li>
+      <li> <ion-grid><ion-row><ion-avatar class="avatarE" style="background-color: transparent; width: 15px; height: 15px;" ><img  src="https://www.flaticon.com/svg/static/icons/svg/2150/2150538.svg"></ion-avatar> die Freundschaft entfernen</ion-row></ion-grid> </li>
+    </ul>
+    <p>Wenn Sie einen Freund einladen, wird er eine Email an seiner Email Address bekommen, über die er dem Raum beitreten kann</p>
+    </div>
+    </div>
+    <p style="text-align: center; font-size: large;">Was kann man im Raum als Admin machen? </p>
+    <img src="../../assets/img/addTask.JPG">
+    <p>Als Admin kann man einen Auftrag vorschlagen, zum Beispiel wir wollen etwas von A nach B bewegen und kann er diesem Vorschlag eine Beschreibung einfügen. </p>
+    <p>Nachdem der Admin den Auftrag gepostet hat, können alle Benutzer im Raum ihn sehen und für diesen Auftrag die Umstetzungsschwerigkeit mit Spielkarten schätzen</p>
+    <img src="../../assets/img/tasksgepostet.JPG">
+    <p>Nach dem Wählen von einer Spielkarte, wird die Schätzung abgegeben und in der Schätzungensliste gelistet </p>
+    <img src="../../assets/img/schätzungAbgabe.JPG">
+    <p>Jedes Mal, wenn eine neue Schätzung abgegeben wird, wird die Schwerigkeitsgrad für den Auftrag neu berechnet und das Ergebnis in Form eines Fortschrittsindex veranschaulicht</p>
+    <img src="../../assets/img/Fortschrittsindex.JPG">
+    </div>
+    <h1 style="text-align: center;">This App is developed  by Ihssan Diba</h1>
+      <h1 style="text-align: center;">Thank you for trying it out</h1>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed" >
+      <ion-fab-button id="ionFabbtn" (click)="close()">
+       
+          <ion-icon name="close"></ion-icon>
+        
+        
+      </ion-fab-button>
+      </ion-fab>
+</ion-content>

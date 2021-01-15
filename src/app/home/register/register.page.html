@@ -1,0 +1,158 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-button (click)="back()" slot="start">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title> Poker </ion-title>
+    <div class="logo">
+      <img
+        width="60px"
+        height="60px"
+        src="https://media.glassdoor.com/sqll/1121784/vereinigte-hagelversicherung-squarelogo-1450938288893.png"
+      />
+    </div>
+
+    <div slot="end" (click)="showProfiloptions()" id="UserName">
+      <div class="centered">{{currentUserName}}</div>
+      <ion-icon *ngIf="toggleOptions" name="chevron-down-outline"></ion-icon
+      ><ion-icon *ngIf="!toggleOptions" name="chevron-up-outline"></ion-icon>
+    </div>
+  </ion-toolbar>
+  <ion-card
+    [class.showProfilOption]="toggleOptions"
+    style="position: absolute; right: 0; margin: 0"
+  >
+    <ion-card-content>
+      <p class="profileOptions">Profile</p>
+      <p class="profileOptions">Settings</p>
+      <p (click)="logout()" class="profileOptions">Sign out</p>
+    </ion-card-content>
+  </ion-card>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="toggleView | async" class="container">
+    <form #adminform="ngForm" (ngSubmit)="CreateRoom()">
+      <ion-card>
+        <ion-card-content>
+          <ion-item-group>
+            <ion-item>
+              <ion-label position="floating">Room Name</ion-label>
+
+              <ion-input
+                required
+                #roomID="ngModel"
+                [(ngModel)]="RoomName"
+                name="RoomName"
+                type="text"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Room ID</ion-label>
+
+              <ion-input
+                required
+                #roomID="ngModel"
+                [(ngModel)]="idAdminRoom"
+                name="RoomId"
+                type="text"
+              ></ion-input>
+            </ion-item>
+            <p
+              class="text-danger"
+              [class.d-none]="roomID.valid || roomID.untouched"
+            >
+              RoomID can't be blank!
+            </p>
+            <p class="text-danger" *ngIf="ConfirmNewRoom">{{ConfirmNewRoom}}</p>
+            <ion-item>
+              <ion-button [disabled]="adminform.form.invalid" type="submit">
+                Create the Room
+              </ion-button>
+            </ion-item>
+          </ion-item-group>
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </div>
+
+  <div *ngIf="toggleViewJoin | async" class="container">
+    <form #memberform="ngForm" (ngSubmit)="addMember()">
+      <ion-card>
+        <ion-card-content>
+          <ion-item-group>
+            <ion-item>
+              <ion-label position="floating">Room ID</ion-label>
+
+              <ion-input
+                required
+                #roomID="ngModel"
+                [(ngModel)]="idMemberRoom"
+                name="RoomId"
+                type="text"
+              ></ion-input>
+            </ion-item>
+            <p
+              class="text-danger"
+              [class.d-none]="roomID.valid || roomID.untouched"
+            >
+              Room ID can't be blank!
+            </p>
+
+            <p
+              class="text-danger"
+              [class.RoomIdConfirmation]="!roomIdConfirmation"
+            >
+              There is no Room with this Room ID avaliable!
+            </p>
+
+            <ion-item>
+              <ion-button [disabled]="memberform.form.invalid" type="submit">
+                Join the Room
+              </ion-button>
+            </ion-item>
+          </ion-item-group>
+        </ion-card-content>
+      </ion-card>
+    </form>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-item>
+            <form #userinput="ngForm">
+              <ion-label position="floating"
+                ><ion-icon name="search-outline"></ion-icon>&nbsp;
+                Search</ion-label
+              >
+              <ion-input
+                name="searchEngine"
+                type="text"
+                [value]=""
+                (input)="filter($event.target.value)"
+              ></ion-input>
+            </form>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <div *ngFor="let room of filteredRooms; let i = index">
+              <ion-item *ngIf="room.Room">
+                <ion-label id="labeltasks"> {{room.Room}} </ion-label>
+                <ion-button
+                  slot="end"
+                  fill="clear"
+                  (click)="EnteringRoom(room.Room , room.id)"
+                  ><ion-icon name="enter"></ion-icon>&nbsp; enter</ion-button
+                >
+              </ion-item>
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
