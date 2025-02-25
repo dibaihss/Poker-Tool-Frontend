@@ -5,7 +5,7 @@ const {Pool, Client} = require('pg');
 
 const client = new Client({
     user: 'postgres',
-    password: 'May5050*#66',
+    password: 'May50fdsf',
     hostname: 'ihssan',
     port: 5432 ,
     database: 'pokerappdb'
